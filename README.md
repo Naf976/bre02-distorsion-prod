@@ -15,5 +15,32 @@ Distorsion is an anonymous message board, that allows posting messages in channe
 - `create-channel`
 - `list-messages`
 - `create-message`
+- `register`
+- `login`
+
+## Models
+
+### Category
+
+- `id`
+- `name`
+
+### Channel
+
+- `id`
+- `name`
+- `category_id`
+
+### Messages
+- `id`
+- `content`
+- `channel_id`
+- `user_id`
+
+### User
+- `id`
+- `username`
+- `password`
+- `role`
 
 
