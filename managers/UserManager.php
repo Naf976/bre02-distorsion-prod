@@ -5,7 +5,7 @@
  */
 
 
-class UserManager
+class UserManager extends AbstractManager
 {
 
 }
