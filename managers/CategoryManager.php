@@ -18,15 +18,42 @@ class CategoryManager extends AbstractManager
      */
     public function findAll() : array
     {
-        return [];
+        $query = $this->db->prepare('SELECT * FROM categories');
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $categories = [];
+
+        foreach($result as $item)
+        {
+            $category = new Category($item["name"]);
+            $category->setId($item["id"]);
+            $categories[] = $category;
+        }
+
+        return $categories;
     }
 
     /**
      * @param string $name
      * @return Category|null
      */
-    public function findOneByName(string $name) : ? Category
+    public function findOne(int $id) : ? Category
     {
+        $query = $this->db->prepare('SELECT * FROM categories WHERE id = :id');
+        $parameters = [
+            "id" => $id,
+        ];
+        $query->execute($parameters);
+        $item = $query->fetch(PDO::FETCH_ASSOC);
+
+        if($item)
+        {
+            $category = new Category($item["name"]);
+            $category->setId($item["id"]);
+
+            return $category;
+        }
+
         return null;
     }
 

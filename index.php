@@ -4,5 +4,8 @@
  * @link : https://github.com/Gaellan
  */
 
-require "templates/layout.phtml";
+require "config/autoload.php";
+
+$router = new Router();
+$router->handleRequest($_GET);
 

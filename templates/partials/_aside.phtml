@@ -4,55 +4,31 @@
         <input type="text" id="cat-name" name="cat-name" aria-label="Category Name"/>
         <button type="submit" aria-label="Add"><span class="bi bi-plus-circle"></span></button>
     </form>
-    <h3>
-        Category 1 <button class="btn-add-channel" data-cat="" aria-label="Open the add channel form"><span class="bi bi-plus-circle"></span></button>
-    </h3>
-    <form class="add-channel">
-        <input type="hidden" name="cat-id" id="cat-id" value="" />
-        <input type="text" id="chan-name" name="chan-name" aria-label="Channel Name"/>
-        <button type="submit" aria-label="Add"><span class="bi bi-plus-circle"></span></button>
-    </form>
-    <ul>
-        <li>
-            Channel 1
-        </li>
-        <li>
-            Channel 2
-        </li>
-    </ul>
-    <h3>
-        Category 2 <button class="btn-add-channel" data-cat="" aria-label="Open the add channel form"><span class="bi bi-plus-circle"></span></button>
-    </h3>
-    <form class="add-channel">
-        <input type="hidden" name="cat-id" id="cat-id" value="" />
-        <input type="text" id="chan-name" name="chan-name" aria-label="Channel Name"/>
-        <button type="submit" aria-label="Add"><span class="bi bi-plus-circle"></span></button>
-    </form>
-    <ul>
-        <li>
-            Channel 1
-        </li>
-        <li>
-            Channel 2
-        </li>
-        <li>
-            Channel 3
-        </li>
-    </ul>
-    <h3>
-        Category 3 <button class="btn-add-channel" data-cat="" aria-label="Open the add channel form"><span class="bi bi-plus-circle"></span></button>
-    </h3>
-    <form class="add-channel">
-        <input type="hidden" name="cat-id" id="cat-id" value="" />
-        <input type="text" id="chan-name" name="chan-name" aria-label="Channel Name"/>
-        <button type="submit" aria-label="Add"><span class="bi bi-plus-circle"></span></button>
-    </form>
-    <ul>
-        <li>
-            Channel 1
-        </li>
-        <li>
-            Channel 2
-        </li>
-    </ul>
+    <?php
+        foreach($data["categories"] as $category)
+        {
+            ?>
+            <h3>
+                <?= $category["category"]->getName() ?> <button class="btn-add-channel" data-cat="" aria-label="Open the add channel form"><span class="bi bi-plus-circle"></span></button>
+            </h3>
+            <form class="add-channel">
+                <input type="hidden" name="cat-id" id="cat-id" value="<?= $category["category"]->getId() ?>" />
+                <input type="text" id="chan-name" name="chan-name" aria-label="Channel Name"/>
+                <button type="submit" aria-label="Add"><span class="bi bi-plus-circle"></span></button>
+            </form>
+            <ul>
+                <?php
+                    foreach($category["channels"] as $channel)
+                {
+                ?>
+                <li>
+                    <?= $channel->getName() ?>
+                </li>
+                <?php
+                }
+                ?>
+            </ul>
+            <?php
+        }
+    ?>
 </aside>

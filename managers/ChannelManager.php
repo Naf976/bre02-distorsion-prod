@@ -18,7 +18,22 @@ class ChannelManager extends AbstractManager
      */
     public function findByCategory(Category $category) : array
     {
-        return [];
+        $query = $this->db->prepare('SELECT * FROM channels WHERE category_id=:category_id');
+        $parameters = [
+          "category_id" => $category->getId()
+        ];
+        $query->execute($parameters);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $channels = [];
+
+        foreach($result as $item)
+        {
+            $channel = new Channel($item["name"], $category);
+            $channel->setId($item["id"]);
+            $channels[] = $channel;
+        }
+
+        return $channels;
     }
 
     /**
