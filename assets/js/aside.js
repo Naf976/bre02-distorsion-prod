@@ -14,9 +14,13 @@ function addCategoryToAside(category) {
     btnSpan.classList.add("bi");
     btnSpan.classList.add("bi-plus-circle");
 
+    let ul = document.createElement("ul");
+    ul.setAttribute("data-cat", category.id);
+
     btn.appendChild(btnSpan);
     h3.appendChild(btn);
     aside.appendChild(h3);
+    aside.appendChild(ul);
 
     btn.addEventListener("click", toggleChannelForm);
 
@@ -79,6 +83,15 @@ function addCategory(event) {
     }
 }
 
+function addChannelToAside(channel)
+{
+    let ul = document.querySelector(`ul[data-cat="${channel.category}"]`);
+    let li = document.createElement("li");
+    li.innerText = channel.name;
+
+    ul.appendChild(li);
+}
+
 function addChannel(event)
 {
     event.preventDefault();
@@ -103,6 +116,7 @@ function addChannel(event)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                addChannelToAside(data.channel);
             });
     }
 }

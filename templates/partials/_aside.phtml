@@ -16,7 +16,7 @@
                 <input type="text" id="chan-name" name="chan-name" aria-label="Channel Name"/>
                 <button type="submit" aria-label="Add"><span class="bi bi-check2"></span></button>
             </form>
-            <ul>
+            <ul data-cat="<?= $category["category"]->getId() ?>">
                 <?php
                     foreach($category["channels"] as $channel)
                 {

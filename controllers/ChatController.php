@@ -57,6 +57,31 @@ class ChatController extends AbstractController
 
     public function createChannel() : void
     {
-        $this->renderJson(["status" => "OK", "channel" => []]);
+        if(isset($_POST["cat-id"]) && isset($_POST["chan-name"]))
+        {
+            $category = $this->catM->findOne(intval($_POST["cat-id"]));
+            $channel = new Channel($_POST["chan-name"], $category);
+
+            $this->chanM->create($channel);
+
+            $this->renderJson(["status" => "OK", "channel" => $channel->toArray()]);
+        }
+        else
+        {
+            $errors = [];
+
+            if(!isset($_POST["chan-name"]))
+            {
+                $errors[] = "Missing channel name";
+            }
+
+            if(!isset($_POST["cat-id"]))
+            {
+                $errors[] = "Missing category id";
+            }
+
+            $this->renderJson(["status" => "NOK", "errors" => $errors]);
+        }
+
     }
 }

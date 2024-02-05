@@ -51,7 +51,15 @@ class ChannelManager extends AbstractManager
      */
     public function create(Channel $channel) : void
     {
+        $query = $this->db->prepare('INSERT INTO channels (id, name, category_id) VALUES (NULL, :name, :category_id)');
+        $parameters = [
+            "name" => $channel->getName(),
+            "category_id" => $channel->getCategory()->getId()
+        ];
 
+        $query->execute($parameters);
+
+        $channel->setId($this->db->lastInsertId());
     }
 
     /**
