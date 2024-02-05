@@ -102,11 +102,25 @@ class Message
 
     public function toArray()
     {
-        return [
-            "content" => $this->content,
-            "channel" => $this->getChannel()->getId(),
-            "user" => $this->getUser()->getUsername(),
-            "created_at" => $this->createdAt->format("d/m/y H:i")
-        ];
+        if($this->getUser()->getImage() !== null)
+        {
+            return [
+                "content" => $this->content,
+                "channel" => $this->getChannel()->getId(),
+                "user" => $this->getUser()->getUsername(),
+                "image" => $this->getUser()->getImage()->getUrl(),
+                "created_at" => $this->createdAt->format("d/m/y H:i")
+            ];
+        }
+        else
+        {
+            return [
+                "content" => $this->content,
+                "channel" => $this->getChannel()->getId(),
+                "user" => $this->getUser()->getUsername(),
+                "image" => null,
+                "created_at" => $this->createdAt->format("d/m/y H:i")
+            ];
+        }
     }
 }

@@ -1,4 +1,9 @@
 <aside>
+    <?php
+
+    if(isset($_SESSION["user"])) {
+
+    ?>
     <h2 id="cat-label">Categories <button id="btn-add-category" aria-label="Open the add category form"><span class="bi bi-plus-circle"></span></button></h2>
     <form id="add-category" class="closed">
         <input type="text" id="cat-name" name="cat-name" aria-label="Category Name"/>
@@ -30,5 +35,6 @@
             </ul>
             <?php
         }
+    }
     ?>
 </aside>

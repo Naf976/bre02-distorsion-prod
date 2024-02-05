@@ -180,7 +180,7 @@ function loadChannel(channel, messages)
 
         let header = document.createElement("header");
         let figure = document.createElement("figure");
-        figure.innerHTML = `<img src="https://picsum.photos/id/${Math.floor(Math.random() * (200 - 1 + 1) + 1)}/20" alt=""/>`;
+        figure.innerHTML = `<img src="${item.image}" alt="" width="20" height="20"/>`;
         let author = document.createElement("p");
         author.innerText = item.user;
         header.appendChild(figure);

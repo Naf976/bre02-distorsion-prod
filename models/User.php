@@ -13,7 +13,7 @@ class User
      * @param string $password
      * @param string $role
      */
-    public function __construct(private string $username, private string $password, private string $role)
+    public function __construct(private string $username, private string $password, private string $role, private ? Media $image = null)
     {
 
     }
@@ -80,5 +80,21 @@ class User
     public function setRole(string $role): void
     {
         $this->role = $role;
+    }
+
+    /**
+     * @return Media|null
+     */
+    public function getImage(): ?Media
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Media|null $image
+     */
+    public function setImage(?Media $image): void
+    {
+        $this->image = $image;
     }
 }

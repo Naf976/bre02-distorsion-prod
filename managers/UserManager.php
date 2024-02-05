@@ -16,7 +16,18 @@ class UserManager extends AbstractManager
         $query->execute($parameters);
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
-        $user = new User($result["username"], $result["password"], $result["role"]);
+        $mediaManager = new MediaManager();
+
+        if($result["image_id"] !== null)
+        {
+            $media = $mediaManager->findOne($result["image_id"]);
+            $user = new User($result["username"], $result["password"], $result["role"], $media);
+        }
+        else
+        {
+            $user = new User($result["username"], $result["password"], $result["role"]);
+        }
+
         $user->setId($result["id"]);
 
         return $user;

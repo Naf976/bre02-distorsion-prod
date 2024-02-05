@@ -11,11 +11,14 @@ class AuthController extends AbstractController
     private ChannelManager $chanM;
     private UserManager $um;
 
+    private MediaManager $mm;
+
     public function __construct()
     {
         $this->chanM = new ChannelManager();
         $this->catM = new CategoryManager();
         $this->um = new UserManager();
+        $this->mm = new MediaManager();
     }
 
     public function register()
@@ -45,7 +48,17 @@ class AuthController extends AbstractController
 
             if($user === null)
             {
-                $user = new User($_POST["username"], $password, "USER");
+                if(isset($_FILES)){
+                    $uploader = new Uploader();
+                    $media = $uploader->upload($_FILES, "image");
+                    $this->mm->create($media);
+                    $user = new User($_POST["username"], $password, "USER", $media);
+                }
+                else
+                {
+                    $user = new User($_POST["username"], $password, "USER");
+                }
+
                 $this->um->create($user);
 
                 $_SESSION["user"] = $user->getId();
