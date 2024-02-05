@@ -61,17 +61,15 @@ class CategoryManager extends AbstractManager
      * @param Category $category
      * @return void
      */
-    public function rename(Category $category) : void
+    public function create(Category $category) : void
     {
+        $query = $this->db->prepare('INSERT INTO categories (id, name) VALUES (NULL, :name)');
+        $parameters = [
+            "name" => $category->getName(),
+        ];
 
-    }
+        $query->execute($parameters);
 
-    /**
-     * @param Category $category
-     * @return void
-     */
-    public function delete(Category $category) : void
-    {
-
+        $category->setId($this->db->lastInsertId());
     }
 }

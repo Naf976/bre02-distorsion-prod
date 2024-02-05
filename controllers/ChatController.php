@@ -43,7 +43,16 @@ class ChatController extends AbstractController
 
     public function createCategory() : void
     {
-        $this->renderJson(["status" => "OK", "category" => []]);
+        if(isset($_POST["cat-name"]))
+        {
+            $category = new Category($_POST["cat-name"]);
+            $this->catM->create($category);
+            $this->renderJson(["status" => "OK", "category" => $category->toArray()]);
+        }
+        else
+        {
+            $this->renderJson(["status" => "NOK", "errors" => ["Missing Category name"]]);
+        }
     }
 
     public function createChannel() : void
