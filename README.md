@@ -5,42 +5,10 @@ Distorsion project for the BRE01 session
 
 Distorsion is an anonymous message board, that allows posting messages in channels, grouped by categories.
 
-## Routes
+## Bonuses
 
-- pas de route : page d'accueil
-- `about` : page à propos
-- `list-categories`
-- `create-category`
-- `list-channels`
-- `create-channel`
-- `list-messages`
-- `create-message`
-- `register`
-- `login`
-
-## Models
-
-### Category
-
-- `id`
-- `name`
-
-### Channel
-
-- `id`
-- `name`
-- `category_id`
-
-### Messages
-- `id`
-- `content`
-- `channel_id`
-- `user_id`
-
-### User
-- `id`
-- `username`
-- `password`
-- `role`
+- Users with login and registration
+- Users have profile pictures uploaded at registration
+- No page reload for creating categories, channels, messages and navigating between channels
 
 
