@@ -3,6 +3,7 @@
  * @author : Gaellan
  * @link : https://github.com/Gaellan
  */
+session_start();
 
 require "config/autoload.php";
 

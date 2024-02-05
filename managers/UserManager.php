@@ -41,4 +41,18 @@ class UserManager extends AbstractManager
 
         return null;
     }
+
+    public function create(User $user) : void
+    {
+        $query = $this->db->prepare('INSERT INTO users (id, username, password, role) VALUES (NULL, :username, :password, :role)');
+        $parameters = [
+            "username" => $user->getUsername(),
+            "password" => $user->getPassword(),
+            "role" => $user->getRole()
+        ];
+
+        $query->execute($parameters);
+
+        $user->setId($this->db->lastInsertId());
+    }
 }

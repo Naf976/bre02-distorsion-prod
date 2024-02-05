@@ -3,11 +3,18 @@
     <ul>
 
     </ul>
-    <form id="send-message">
-        <input type="hidden" id="chan-id" name="chan-id" value="" />
-        <textarea id="message" name="message" aria-label="Your message">
+    <?php
+    if(isset($_SESSION["user"]))
+    {
+    ?>
+        <form id="send-message">
+            <input type="hidden" id="chan-id" name="chan-id" value="" />
+            <textarea id="message" name="message" aria-label="Your message">
 
         </textarea>
-        <button type="submit" aria-label="Send Message"><span class="bi bi-send"></span></button>
-    </form>
+            <button type="submit" aria-label="Send Message"><span class="bi bi-send"></span></button>
+        </form>
+    <?php
+    }
+    ?>
 </main>

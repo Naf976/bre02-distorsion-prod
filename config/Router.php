@@ -47,5 +47,35 @@ class Router
             $controller = new ChatController();
             $controller->sendMessage();
         }
+        else if(isset($get["route"]) && ($get["route"] === "login"))
+        {
+            $controller = new AuthController();
+            $controller->login();
+        }
+        else if(isset($get["route"]) && ($get["route"] === "check-login"))
+        {
+            $controller = new AuthController();
+            $controller->checkLogin();
+        }
+        else if(isset($get["route"]) && ($get["route"] === "register"))
+        {
+            $controller = new AuthController();
+            $controller->register();
+        }
+        else if(isset($get["route"]) && ($get["route"] === "check-register"))
+        {
+            $controller = new AuthController();
+            $controller->checkRegister();
+        }
+        else if(isset($get["route"]) && ($get["route"] === "logout"))
+        {
+            $controller = new AuthController();
+            $controller->logout();
+        }
+        else
+        {
+            $controller = new ChatController();
+            $controller->chat();
+        }
     }
 }
