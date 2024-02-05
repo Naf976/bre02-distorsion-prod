@@ -36,6 +36,22 @@ class ChannelManager extends AbstractManager
         return $channels;
     }
 
+    public function findOne(int $id) : Channel
+    {
+        $query = $this->db->prepare('SELECT * FROM channels WHERE id=:id');
+        $parameters = [
+            "id" => $id
+        ];
+        $query->execute($parameters);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        $cm = new CategoryManager();
+        $channel = new Channel($result["name"], $cm->findOne(intval($result["category_id"])));
+        $channel->setId($result["id"]);
+
+        return $channel;
+    }
+
     /**
      * @param Channel $channel
      * @return void

@@ -38,7 +38,16 @@ class ChatController extends AbstractController
 
     public function channel(string $channelId) : void
     {
+        $messageList = $this->mm->findByChannel(intval($channelId));
+        $messages = [];
 
+        foreach($messageList as $item)
+        {
+            $message = $item->toArray();
+            $messages[] = $message;
+        }
+
+        $this->renderJson(["status" => "OK", "messages" => $messages, "channel" => $messageList[0]->getChannel()->toArray()]);
     }
 
     public function createCategory() : void

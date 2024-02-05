@@ -21,7 +21,7 @@
                     foreach($category["channels"] as $channel)
                 {
                 ?>
-                <li>
+                <li data-chan="<?= $channel->getId() ?>">
                     <?= $channel->getName() ?>
                 </li>
                 <?php

@@ -82,4 +82,13 @@ class Message
     {
         $this->user = $user;
     }
+
+    public function toArray()
+    {
+        return [
+            "content" => $this->content,
+            "channel" => $this->getChannel()->getId(),
+            "user" => $this->getUser()->getUsername()
+        ];
+    }
 }

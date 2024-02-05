@@ -87,7 +87,9 @@ function addChannelToAside(channel)
 {
     let ul = document.querySelector(`ul[data-cat="${channel.category}"]`);
     let li = document.createElement("li");
+    li.setAttribute("data-chan", channel.id);
     li.innerText = channel.name;
+    li.addEventListener("click", switchChannel);
 
     ul.appendChild(li);
 }
@@ -158,12 +160,68 @@ function toggleChannelForm(event)
     form.addEventListener("submit", addChannel);
 }
 
+function loadChannel(channel, messages)
+{
+    let input = document.querySelector("#chat #chan-id");
+    input.value = messages[0].channel;
+
+    let ul = document.querySelector("#chat > ul");
+    ul.innerHTML = "";
+
+    let h2 = document.createElement("h2");
+    h2.innerText = channel.name;
+
+    messages.forEach((item) => {
+        let li = document.createElement("li");
+        let article = document.createElement("article");
+
+        let header = document.createElement("header");
+        let figure = document.createElement("figure");
+        figure.innerHTML = `<img src="https://picsum.photos/id/${Math.floor(Math.random() * (200 - 1 + 1) + 1)}/20" alt=""/>`;
+        let author = document.createElement("p");
+        author.innerText = item.user;
+        header.appendChild(figure);
+        header.appendChild(author);
+        article.appendChild(header);
+
+        let content = document.createElement("p");
+        content.innerText = item.content;
+        article.appendChild(content);
+
+        let footer = document.createElement("footer");
+        let date = document.createElement("p");
+        date.innerText = "Date et heure du message";
+        footer.appendChild(date);
+        article.appendChild(footer);
+
+        li.appendChild(article);
+        ul.appendChild(li);
+    });
+}
+
+function switchChannel(event)
+{
+    let li = event.target;
+    let chanId = li.getAttribute("data-chan");
+
+    fetch('http://localhost:63342/bre01-distorsion/index.php?route=chat&channel=' + chanId)
+        .then(response => response.json())
+        .then(data => {
+            loadChannel(data.channel, data.messages);
+        });
+}
+
 export default () => {
     let addCategoryBtn = document.getElementById("btn-add-category");
     let addChannelBtns = document.querySelectorAll(".btn-add-channel");
+    let channelsLi = document.querySelectorAll("aside li");
 
     addCategoryBtn.addEventListener("click", toggleCategoryForm);
     addChannelBtns.forEach((btn) => {
         btn.addEventListener("click", toggleChannelForm);
+    })
+
+    channelsLi.forEach((li) => {
+        li.addEventListener("click", switchChannel);
     })
 };
