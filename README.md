@@ -1,5 +1,6 @@
 # bre01-distorsion
-Distorsion project for the BRE01 session
+
+Demo example distorsion project for the 3WA BRE01 session
 
 ## Project brief
 
