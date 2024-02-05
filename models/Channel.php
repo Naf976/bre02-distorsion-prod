@@ -65,4 +65,13 @@ class Channel
     {
         $this->category = $category;
     }
+
+    public function toArray() : array
+    {
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "category" => $this->category->getId()
+        ];
+    }
 }

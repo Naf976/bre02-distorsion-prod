@@ -32,5 +32,15 @@ class Router
             $controller = new ChatController();
             $controller->chat();
         }
+        else if(isset($get["route"]) && ($get["route"] === "create-category"))
+        {
+            $controller = new ChatController();
+            $controller->createCategory();
+        }
+        else if(isset($get["route"]) && ($get["route"] === "create-channel"))
+        {
+            $controller = new ChatController();
+            $controller->createChannel();
+        }
     }
 }

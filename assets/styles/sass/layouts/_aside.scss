@@ -32,10 +32,52 @@ main > aside {
   }
 
   #add-category {
-    display: none;
+
+    &.closed {
+      display: none;
+    }
+
+    &.open {
+      display: grid;
+      grid-template-columns: 80% 20%;
+
+      input {
+        color: white;
+        background-color: #343434;
+        border:none;
+      }
+
+      button {
+        border:none;
+        background-color: transparent;
+        color:white;
+      }
+    }
+
   }
 
   .add-channel {
-    display: none;
+
+    &.closed {
+      display: none;
+    }
+
+    &.open {
+      display: grid;
+      grid-template-columns: 80% 20%;
+
+      input {
+        color: white;
+        background-color: #343434;
+        border:none;
+      }
+
+      button {
+        border:none;
+        background-color: transparent;
+        color:white;
+      }
+    }
+
   }
 }

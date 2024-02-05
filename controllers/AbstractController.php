@@ -14,7 +14,7 @@ abstract class AbstractController
 
     protected function renderJson(array $data) : void
     {
-
+        echo json_encode($data);
     }
 
     protected function redirect(string $route) : void

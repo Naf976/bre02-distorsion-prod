@@ -40,4 +40,14 @@ class ChatController extends AbstractController
     {
 
     }
+
+    public function createCategory() : void
+    {
+        $this->renderJson(["status" => "OK", "category" => []]);
+    }
+
+    public function createChannel() : void
+    {
+        $this->renderJson(["status" => "OK", "channel" => []]);
+    }
 }
