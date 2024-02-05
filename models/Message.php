@@ -13,8 +13,9 @@ class Message
      * @param string $content
      * @param Channel $channel
      * @param User $user
+     * @param DateTime $createdAt
      */
-    public function __construct(private string $content, private Channel $channel, private User $user)
+    public function __construct(private string $content, private Channel $channel, private User $user, private DateTime $createdAt)
     {
 
     }
@@ -83,12 +84,29 @@ class Message
         $this->user = $user;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
     public function toArray()
     {
         return [
             "content" => $this->content,
             "channel" => $this->getChannel()->getId(),
-            "user" => $this->getUser()->getUsername()
+            "user" => $this->getUser()->getUsername(),
+            "created_at" => $this->createdAt->format("d/m/y H:i")
         ];
     }
 }

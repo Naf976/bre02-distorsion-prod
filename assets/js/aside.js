@@ -193,7 +193,7 @@ function loadChannel(channel, messages)
 
         let footer = document.createElement("footer");
         let date = document.createElement("p");
-        date.innerText = "Date et heure du message";
+        date.innerText = item.created_at;
         footer.appendChild(date);
         article.appendChild(footer);
 

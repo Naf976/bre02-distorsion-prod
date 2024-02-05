@@ -9,14 +9,12 @@ class AuthController extends AbstractController
 {
     private CategoryManager $catM;
     private ChannelManager $chanM;
-    private MessageManager $mm;
     private UserManager $um;
 
     public function __construct()
     {
         $this->chanM = new ChannelManager();
         $this->catM = new CategoryManager();
-        $this->mm = new MessageManager();
         $this->um = new UserManager();
     }
 
@@ -50,7 +48,7 @@ class AuthController extends AbstractController
                 $user = new User($_POST["username"], $password, "USER");
                 $this->um->create($user);
 
-                $_SESSION["user"] = $user;
+                $_SESSION["user"] = $user->getId();
 
                 $this->redirect("index.php");
             }
@@ -93,7 +91,7 @@ class AuthController extends AbstractController
             {
                 if(password_verify($_POST["password"], $user->getPassword()))
                 {
-                    $_SESSION["user"] = $user;
+                    $_SESSION["user"] = $user->getId();
 
                     $this->redirect("index.php");
                 }

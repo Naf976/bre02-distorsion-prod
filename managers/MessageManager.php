@@ -29,7 +29,7 @@ class MessageManager extends AbstractManager
 
             $user = $um->findOne(intval($item["user_id"]));
             $channel = $cm->findOne(intval($item["channel_id"]));
-            $message = new Message($item["content"], $channel, $user);
+            $message = new Message($item["content"], $channel, $user, DateTime::createFromFormat("Y-m-d H:i:s", $item["created_at"]));
             $messages[] = $message;
         }
 
@@ -38,11 +38,14 @@ class MessageManager extends AbstractManager
 
     public function create(Message $message) : void
     {
-        $query = $this->db->prepare('INSERT INTO messages (id, content, channel_id, user_id) VALUES (NULL, :content, :channel_id, :user_id)');
+        $currentDate = date('Y-m-d H:i:s');
+
+        $query = $this->db->prepare('INSERT INTO messages (id, content, channel_id, user_id, created_at) VALUES (NULL, :content, :channel_id, :user_id, :created_at)');
         $parameters = [
             "content" => $message->getContent(),
             "channel_id" => $message->getChannel()->getId(),
-            "user_id" => $message->getUser()->getId()
+            "user_id" => $message->getUser()->getId(),
+            "created_at" => $currentDate
         ];
 
         $query->execute($parameters);

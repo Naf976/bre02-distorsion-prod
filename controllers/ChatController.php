@@ -109,9 +109,9 @@ class ChatController extends AbstractController
     {
         if(isset($_POST["chan-id"]) && $_POST["message"])
         {
-            $user = $this->um->findOne(1);
+            $user = $this->um->findOne($_SESSION["user"]);
             $channel = $this->chanM->findOne(intval($_POST["chan-id"]));
-            $message = new Message($_POST["message"], $channel, $user);
+            $message = new Message($_POST["message"], $channel, $user, new DateTime());
 
             $this->mm->create($message);
 
