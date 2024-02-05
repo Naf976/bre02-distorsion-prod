@@ -42,5 +42,10 @@ class Router
             $controller = new ChatController();
             $controller->createChannel();
         }
+        else if(isset($get["route"]) && ($get["route"] === "send-message"))
+        {
+            $controller = new ChatController();
+            $controller->sendMessage();
+        }
     }
 }

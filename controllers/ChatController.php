@@ -10,12 +10,14 @@ class ChatController extends AbstractController
     private CategoryManager $catM;
     private ChannelManager $chanM;
     private MessageManager $mm;
+    private UserManager $um;
 
     public function __construct()
     {
         $this->chanM = new ChannelManager();
         $this->catM = new CategoryManager();
         $this->mm = new MessageManager();
+        $this->um = new UserManager();
     }
 
     public function chat() : void
@@ -47,7 +49,16 @@ class ChatController extends AbstractController
             $messages[] = $message;
         }
 
-        $this->renderJson(["status" => "OK", "messages" => $messages, "channel" => $messageList[0]->getChannel()->toArray()]);
+        if(count($messages) > 0)
+        {
+            $this->renderJson(["status" => "OK", "messages" => $messages, "channel" => $messageList[0]->getChannel()->toArray()]);
+        }
+        else
+        {
+            $this->renderJson(["status" => "OK", "messages" => $messages, "channel" => $this->chanM->findOne(intval($channelId))->toArray()]);
+        }
+
+
     }
 
     public function createCategory() : void
@@ -92,5 +103,51 @@ class ChatController extends AbstractController
             $this->renderJson(["status" => "NOK", "errors" => $errors]);
         }
 
+    }
+
+    public function sendMessage()
+    {
+        if(isset($_POST["chan-id"]) && $_POST["message"])
+        {
+            $user = $this->um->findOne(1);
+            $channel = $this->chanM->findOne(intval($_POST["chan-id"]));
+            $message = new Message($_POST["message"], $channel, $user);
+
+            $this->mm->create($message);
+
+            $messageList = $this->mm->findByChannel(intval($_POST["chan-id"]));
+            $messages = [];
+
+            foreach($messageList as $item)
+            {
+                $message = $item->toArray();
+                $messages[] = $message;
+            }
+
+            if(count($messages) > 0)
+            {
+                $this->renderJson(["status" => "OK", "messages" => $messages, "channel" => $messageList[0]->getChannel()->toArray()]);
+            }
+            else
+            {
+                $this->renderJson(["status" => "OK", "messages" => $messages, "channel" => $this->chanM->findOne(intval($_POST["chan-id"]))->toArray()]);
+            }
+        }
+        else
+        {
+            $errors = [];
+
+            if(!isset($_POST["chan-id"]))
+            {
+                $errors[] = "Missing channel id";
+            }
+
+            if(!isset($_POST["message"]))
+            {
+                $errors[] = "Missing message";
+            }
+
+            $this->renderJson(["status" => "NOK", "errors" => $errors]);
+        }
     }
 }

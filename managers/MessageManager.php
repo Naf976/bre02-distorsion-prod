@@ -36,6 +36,20 @@ class MessageManager extends AbstractManager
         return $messages;
     }
 
+    public function create(Message $message) : void
+    {
+        $query = $this->db->prepare('INSERT INTO messages (id, content, channel_id, user_id) VALUES (NULL, :content, :channel_id, :user_id)');
+        $parameters = [
+            "content" => $message->getContent(),
+            "channel_id" => $message->getChannel()->getId(),
+            "user_id" => $message->getUser()->getId()
+        ];
+
+        $query->execute($parameters);
+
+        $message->setId($this->db->lastInsertId());
+    }
+
     public function delete(Message $message) : void
     {
 

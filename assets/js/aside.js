@@ -162,14 +162,17 @@ function toggleChannelForm(event)
 
 function loadChannel(channel, messages)
 {
+    console.log(channel);
     let input = document.querySelector("#chat #chan-id");
-    input.value = messages[0].channel;
+    input.value = channel.id;
 
     let ul = document.querySelector("#chat > ul");
     ul.innerHTML = "";
 
     let h2 = document.createElement("h2");
     h2.innerText = channel.name;
+
+    ul.appendChild(h2);
 
     messages.forEach((item) => {
         let li = document.createElement("li");
@@ -207,6 +210,7 @@ function switchChannel(event)
     fetch('http://localhost:63342/bre01-distorsion/index.php?route=chat&channel=' + chanId)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             loadChannel(data.channel, data.messages);
         });
 }
