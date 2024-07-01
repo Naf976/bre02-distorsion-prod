@@ -1,2 +1,4 @@
 config/database.txt
 assets/styles/css/*
+config/.env
+vendor/
